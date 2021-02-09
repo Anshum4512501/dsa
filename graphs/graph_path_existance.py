@@ -37,7 +37,8 @@ class Graph:
 
 
     def dfs_visit(self,source,visited):
-        for node in self.adj_list[node]:
+        yield source
+        for node in self.adj_list[source]:
             if visited[node]==False:
                 visited[node]=True
                 self.dfs_visit(node,visited)
@@ -49,12 +50,12 @@ class Graph:
 
         visited[source] = True
 
-        self.dfs_visit(source,visited)    
+        yield self.dfs_visit(source,visited)    
 
 
     def find_path(self,source,destination):
         
-        for node in  self.bfs(source):
+        for node in  self.dfs(source):
             # print(node)
             if node == destination:
                 return
@@ -74,5 +75,5 @@ graph.addedge("E","F")
 graph.addedge("G","C")
 graph.addedge("G","D")
 graph.printgraph()
-graph.bfs("A")
+graph.dfs("A")
 graph.find_path("A","D")
