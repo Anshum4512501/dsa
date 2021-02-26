@@ -47,6 +47,8 @@ class BST:
                 return False    
 
     def leftmost(self,node):
+        if not node:
+            return None
         while node:
             parent = node
             node = node.left
