@@ -34,5 +34,41 @@ class Specification:
     @abstractclassmethod
     def is_satisfied(self,item):
         pass
+class Filter:
+    @abstractclassmethod
+    def filter(self,item,spec):
+        pass
 
-product_one = Product("Apple","Green",1)
+class ColorSpecification(Specification):
+    def __init__(self,color) -> None:
+        self.color = color
+        
+
+    def is_satisfied(self, item):
+
+        return self.color == item.color
+class SizeSpecification(Specification):
+    def __init__(self,size) -> None:
+        self.size = size
+        
+
+    def is_satisfied(self, item):
+
+        return self.size == item.size
+
+class BetterFilter(Filter):
+    def filter(self,items,spec):
+        for item in items:
+            if spec.is_satisfied(item):
+                yield item
+            
+
+
+apple = Product('Apple', Color.GREEN, Size.SMALL)
+tree = Product('Tree', Color.GREEN, Size.LARGE)
+house = Product('House', Color.BLUE, Size.LARGE)
+
+products = [apple,tree,house]
+spec = ColorSpecification(Color.GREEN)
+bf = BetterFilter()
+bf.filter(products,spec)
